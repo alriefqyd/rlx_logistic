@@ -1,0 +1,95 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
+
+class User extends Authenticatable
+{
+    use HasApiTokens, HasFactory, Notifiable;
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'username',
+        'email',
+        'password',
+    ]; //hanya bisa diisi client
+
+    /**
+     * The attributes that should be hidden for serialization.
+     *
+     * @var array<int, string>
+     */
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
+
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array<string, string>
+     */
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+    ];
+
+    protected $rules = [
+        'email' => 'required|email:dns|unique:users',
+        'username' => ['required','unique:users'],
+        'password' => ['required'],
+    ];
+
+    public function content(){
+        return $this->hasMany('content')->with($this->profile());
+    }
+
+    public function profile(){
+        return $this->belongsTo(Profile::class);
+    }
+
+    public function price(){
+        return $this->hasMany(Price::class,'company');
+    }
+
+    public function roles(){
+        return $this->belongsToMany(Role::class, 'role_user');
+    }
+
+    public function deliveries(){
+        return $this->hasMany(Delivery::class,'company_by');
+    }
+
+    /**
+     * function for get filter user in price page
+     * @param $query
+     * @return mixed
+     */
+    public function scopeFilter($query, array $filters){
+        $query->when($filters['invoice'] ?? false, fn($query, $invoice) =>
+            $query->Wherehas('deliveries', fn($q) =>
+            $q->where('invoice','=', $invoice)
+        ));
+
+        $query->when($filters['destination'] ?? false, function($query, $destination){
+            return $query->whereHas('price', function ($query) use ($destination){
+                $query->where('destination_location','=' ,$destination);
+            });
+        });
+        $query->when($filters['user'] ?? false, fn($query,$user) =>
+             $query ->WhereHas('profile', fn($q) =>
+                $q->where('full_name', 'like', '%' . $user. '%'))
+                ->orwhere('email','like','%'.$user.'%')
+                ->orWhere('username','like','%'.$user.'%')
+            );
+    }
+
+}
