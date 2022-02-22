@@ -12,7 +12,7 @@
 </div>
 <div class="col-md-6 col-sm-12 col-xs-12 mb-5">
     <label for="">Layanan Pengiriman</label>
-    <select class="select2 form-control" name="layanan">
+    <select class="select2 form-control js-service-delivery js-get-price" name="layanan">
         @foreach($layanan as $layanan)
             <option {{ (collect(old('layanan'))->contains($layanan->id)) || (collect($delivery->layanan)->contains($layanan->id)) ? 'selected="selected"':''  }} value="{{$layanan->id}}">{{$layanan->name}}</option>
         @endforeach

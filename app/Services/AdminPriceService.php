@@ -29,12 +29,11 @@ class AdminPriceService
         return $rule;
     }
 
-    public function getRegularPrice($origin, $destination, $isCorporateRegular){
-
-
+    public function getRegularPrice($origin, $destination, $service, $isCorporateRegular){
         $price = Price::with('originLocation.city.province','destinationLocation.city.province')
             ->where('origin_location',$origin)
             ->where('destination_location',$destination)
+            ->where('layanan', $service)
             ->where('isRegularPrice',true);
         return $price->first();
 
@@ -46,7 +45,8 @@ class AdminPriceService
         $data = Price::with('originLocation.city.province','destinationLocation.city.province')
             ->where('origin_location',$origin)
             ->where('destination_location',$destination)
-            ->where('company',1)
+            ->where('layanan',request('service'))
+            ->where('company',request('company'))
             ->first();
 
         return $data;

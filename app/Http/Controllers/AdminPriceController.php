@@ -258,16 +258,19 @@ class AdminPriceController extends Controller
         $priceService = new AdminPriceService();
         $origin = request('origin');
         $destination = request('destination');
-        $get_regular_price = $priceService->getRegularPrice($origin, $destination, false);
+        $service = request('service');
+        $get_regular_price = $priceService->getRegularPrice($origin, $destination, $service, false);
         $data = [
             'price' => $get_regular_price ? $get_regular_price->regular_price : null
         ];
         if(request('company') && request('company') != null){
             $corporatePrice = $priceService->getCorporatePrice($request);
             $data = [
-                'price' => $corporatePrice->price ?? $get_regular_price->regular_price
+                'price' => $corporatePrice->price ??
+                    (isset($get_regular_price->regular_price) ? $get_regular_price->regular_price : null)
             ];
         }
+
         return response()->json($data);
     }
 

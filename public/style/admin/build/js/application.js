@@ -170,6 +170,7 @@ Admin Delivery
     var delivery_location = $form_delivery.find('.js-delivery-location');
     var get_price = $form_delivery.find('.js-get-price');
     var company = $form_delivery.find('.js-company');
+    var service = $form_delivery.find('.js-service-delivery');
     var asuransi = $('.js-select-asuransi');
     var priceRecap = $('.js-price-recap');
     var dimensi = $('.js-dimensi');
@@ -218,17 +219,17 @@ Admin Delivery
                     }
                 }
             }
-        })
+        });
     }
 
     button_search_sender.on('click',function(e){
         e.preventDefault();
-        getDataProfile($(this), true)
+        getDataProfile($(this), true);
     });
 
     button_search_recipient.on('click',function(e){
         e.preventDefault();
-        getDataProfile($(this),false)
+        getDataProfile($(this),false);
     });
 
 
@@ -245,13 +246,12 @@ Admin Delivery
     });
 
     $(document).on('change','.js-company',function () {
-        beratDikenakanBiaya(total_volume,total_berat_kotor,berat_per_barang,volume_per_barang)
+        beratDikenakanBiaya(total_volume,total_berat_kotor,berat_per_barang,volume_per_barang);
     });
 
     get_price.each(function(e){
        var _this = $(this);
         _this.on('change', function(){
-            console.log(company.val() ? company.val() : null);
            $.ajax({
                url:'/getPrice',
                data:{
@@ -259,7 +259,8 @@ Admin Delivery
                    destination:delivery_location.val(),
                    isRegularPrice:false,
                    isDelivery: true,
-                   company: company.val() ? company.val() : null
+                   company: company.val() ? company.val() : null,
+                   service: service.val() ? service.val() : null
                },
                success:function(result){
                    if(result.price){
@@ -269,15 +270,16 @@ Admin Delivery
                        // $form_delivery.find('.js-biaya-kirim-label').text(result.price.toLocaleString('id-ID'));
                        // totalPrice = totalPrice + result.price;
                    } else {
+                       ongkos_kirim = 0;
                        $form_delivery.find('.js-biaya-kirim-label').text(0);
-                       $form_delivery.find('.js-js-sending-price').val(0);
+                       $form_delivery.find('.js-sending-price').val(0);
                    }
                }
            });
 
             setTimeout(function () {
-                beratDikenakanBiaya(total_volume, total_berat_kotor, berat_per_barang, volume_per_barang)
-            },100)
+                beratDikenakanBiaya(total_volume, total_berat_kotor, berat_per_barang, volume_per_barang);
+            },100);
 
        });
     });
@@ -296,10 +298,10 @@ Admin Delivery
         var _berat = _this.val();
         $('.js-table-data-barang').find('.js-berat-barang').each(function(index) {
             countBarang();
-            arrBerat[index] = $(this).val()
+            arrBerat[index] = $(this).val();
         });
         $.each(arrBerat,function () {
-            berat_barang += parseInt(this)
+            berat_barang += parseInt(this);
         });
         var berat_total = 0;
         $.each(arrBerat,function(){
@@ -312,7 +314,7 @@ Admin Delivery
 
         var data_berat_perbarang_dikenakan_biaya = [berat_per_barang,volume_per_barang];
         var beratBiaya = Math.max.apply(Math, data_berat_perbarang_dikenakan_biaya);
-        if(_this.closest('.js-row-data-barang').find('.js-berat-barang').val() != '' && _this.closest('.js-row-data-barang').find('.js-berat-biaya-per-barang').val() != '') {
+        if(_this.closest('.js-row-data-barang').find('.js-berat-barang').val() !== '' && _this.closest('.js-row-data-barang').find('.js-berat-biaya-per-barang').val() !== '') {
             _this.closest('.js-row-data-barang').find('.js-berat-biaya-per-barang').val(beratBiaya);
         }
         beratDikenakanBiaya(total_volume,total_berat_kotor, berat_per_barang, volume_per_barang);
@@ -324,10 +326,10 @@ Admin Delivery
         var arrVolume = [];
         $form_delivery.find('.js-dimensi').each(function () {
             var $this = $(this);
-            $this.inputmask("999 x 999 x 999", {
-                "oncomplete": function () {
+            $this.inputmask('999 x 999 x 999', {
+                'oncomplete': function () {
                     var _this = $(this);
-                    var value = _this.val().split("x");
+                    var value = _this.val().split('x');
                     var volume = 1;
                     $.each(value,function(){
                         volume = volume*this;
@@ -343,7 +345,7 @@ Admin Delivery
 
                     var volumeTotal = 0;
                     $.each(arrVolume,function () {
-                        volumeTotal += parseFloat(this)
+                        volumeTotal += parseFloat(this);
                     });
 
                     $('.js-total-berat-dimensi').text(volumeTotal);
@@ -367,9 +369,8 @@ Admin Delivery
     }
 
     asuransi.on('change',function(){
-        var _value = $(this).find(":selected").val();
-        console.log(totalPrice);
-        beratDikenakanBiaya(total_volume, total_berat_kotor, berat_per_barang, volume_per_barang)
+        var _value = $(this).find(':selected').val();
+        beratDikenakanBiaya(total_volume, total_berat_kotor, berat_per_barang, volume_per_barang);
     });
 
     function biayaAsuransi(_value){

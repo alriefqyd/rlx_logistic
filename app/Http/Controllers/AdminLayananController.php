@@ -45,8 +45,6 @@ class AdminLayananController extends Controller
             'code' => 'required|unique:layanans',
             'price' => 'required',
             'description' => 'required',
-            'origin' => 'required',
-            'destination' => 'required'
         ]);
 
         Layanan::create($data);
@@ -87,7 +85,16 @@ class AdminLayananController extends Controller
      */
     public function update(Request $request, Layanan $layanan)
     {
-        //
+        $layanan->update([
+            'name' => $request->name,
+            'code' => $request->code,
+            'price' => $request->price,
+            'description' => $request->description,
+        ]);
+
+        toastr()->success('Data has been update successfully!');
+        return redirect('admin/layanan');
+
     }
 
     /**
