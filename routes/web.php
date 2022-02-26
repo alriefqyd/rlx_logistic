@@ -30,7 +30,8 @@ Route::prefix('admin')->group(function () {
     Route::get('/home', [\App\Http\Controllers\AdminHomeController::class,'index'])->middleware('auth');
     Route::get('/delivery/export',[\App\Http\Controllers\AdminDeliveryController::class,'export'])->middleware(['auth']);
     Route::get('/page/about',[\App\Http\Controllers\AdminPageController::class, 'detail']);
-    Route::get('/page/home',[\App\Http\Controllers\AdminPageController::class, 'detail']);
+    Route::get('/page/home',[\App\Http\Controllers\AdminPageController::class, 'detail'])->middleware(['auth']);
+    Route::put('/page/home',[\App\Http\Controllers\AdminPageController::class, 'store'])->middleware(['auth']);
 
     Route::resource('/delivery', \App\Http\Controllers\AdminDeliveryController::class)->middleware('auth');
     //Route::get('/users/{user::username}', [UserController::class, 'show']); //route binding model untuk get berdasarkan username dari url
