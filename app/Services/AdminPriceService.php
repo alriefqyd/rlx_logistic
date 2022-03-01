@@ -31,7 +31,6 @@ class AdminPriceService
 
     public function getRegularPrice($origin, $destination, $isCorporateRegular){
 
-
         $price = Price::with('originLocation.city.province','destinationLocation.city.province')
             ->where('origin_location',$origin)
             ->where('destination_location',$destination)

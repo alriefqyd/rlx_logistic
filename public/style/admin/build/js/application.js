@@ -481,11 +481,14 @@ Admin Delivery
     // })
 
 
-    /*
-    Price Page
-     */
+    function formatText (icon){
+        return $('<span><i class="fa ' + $(icon.element).data('icon') + '"></i> ' + icon.text + '</span>');
+    };
 
-    var priceForm = $('.js-price-form');
+    $('.select2-icon').select2({
+        templateSelection: formatText,
+        templateResult: formatText
+    });
 
 });
 
