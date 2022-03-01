@@ -7,12 +7,12 @@
         </div>
     </div>
     <?php if($page): ?>
-        <form method="post" action="/admin/page/home/">
+        <form method="post" action="/admin/page/home/" enctype="multipart/form-data">
             <?php echo csrf_field(); ?>
             <?php echo method_field('PUT'); ?>
             <?php if($slider): ?>
                 <div class="x_panel">
-                    <label>Slider</label>
+                    <h4 class="text-primary mb-5">Component Slider</h4>
                     <?php for($i = 0; $i<count($slider); $i++): ?>
                         <div class="row">
                             <div class="col-md-12 col-sm-12 col-xs-12 mb-2">
@@ -22,11 +22,13 @@
 
                             <div class="col-md-12 col-sm-12 col-xs-12 mb-2">
                                 <label>Sub Title <?php echo e($i+1); ?></label>
-                                <input class="form-control" type="text" name="sliderSubtitle[]" value=" <?php echo e($slider[$i]['subTitle']); ?>"/>
+                                <input class="form-control" type="text" name="sliderSubtitle[]" value="<?php echo e($slider[$i]['subTitle']); ?>"/>
                             </div>
                             <div class="col-md-12 col-sm-12 col-xs-12 mb-2">
-                                <label>Image Slider <?php echo e($i+1); ?></label>
-                                <input class="form-control" type="file" name="sliderImage[]" value=" <?php echo e($slider[$i]['image']); ?>"/>
+                                <label for="image">Image Slider <?php echo e($i+1); ?></label>
+                                <?php echo e($slider[$i]['image']); ?>
+
+                                <input class="form-control" type="file" id="image" name="sliderImage[]" value="<?php echo e($slider[$i]['image']); ?>"/>
                             </div>
                         </div>
                         <div class="ln_solid"></div>
@@ -35,7 +37,7 @@
             <?php endif; ?>
             <?php if($service): ?>
                 <div class="x_panel">
-                    <label>Slider</label>
+                    <h4 class="text-primary mb-5">Component Service</h4>
                     <?php for($j = 0; $j<count($service); $j++): ?>
                         <?php if(array_key_exists('title', $service[$j])): ?>
                         <div class="row">
@@ -49,7 +51,15 @@
                         <div class="row">
                             <div class="col-md-12 col-sm-12 col-xs-12 mb-2">
                                 <label>Icon <?php echo e($j); ?></label>
-                                <input class="form-control" type="text" name="serviceIcon[]" value=" <?php echo e($service[$j]['icon']); ?>"/>
+                                <select name="serviceIcon[]" class="form-control select2-icon">
+                                    <?php $__currentLoopData = $icons; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <option value="<?php echo e($key); ?>" <?php echo e($key == $service[$j]['icon'] ? 'selected' : ''); ?> data-icon="<?php echo e($key); ?>">
+                                            <i class="<?php echo e($key); ?> text-primary fa-3x flex-shrink-0"></i>
+                                            <?php echo e($value); ?>
+
+                                        </option>
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                </select>
                             </div>
                             <div class="col-md-12 col-sm-12 col-xs-12 mb-2">
                                 <label>Sub Title <?php echo e($j); ?></label>
@@ -67,7 +77,7 @@
             <?php endif; ?>
             <?php if($whyus): ?>
                 <div class="x_panel">
-                    <label>Slider</label>
+                    <h4 class="text-primary mb-5">Component Why Us</h4>
                     <?php for($k = 0; $k<count($whyus); $k++): ?>
                         <?php if(array_key_exists('title', $whyus[$k])): ?>
                             <div class="row">
@@ -81,7 +91,15 @@
                             <div class="row">
                                 <div class="col-md-12 col-sm-12 col-xs-12 mb-2">
                                     <label>Icon <?php echo e($k); ?></label>
-                                    <input class="form-control" type="text" name="whyusIcon[]" value=" <?php echo e($whyus[$k]['icon']); ?>"/>
+                                    <select name="whyusIcon[]" class="form-control select2-icon">
+                                        <?php $__currentLoopData = $icons; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                            <option value="<?php echo e($key); ?>" <?php echo e($key == $whyus[$k]['icon'] ? 'selected' : ''); ?> data-icon="<?php echo e($key); ?>">
+                                                <i class="<?php echo e($key); ?> text-primary fa-3x flex-shrink-0"></i>
+                                                <?php echo e($value); ?>
+
+                                            </option>
+                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                    </select>
                                 </div>
                                 <div class="col-md-12 col-sm-12 col-xs-12 mb-2">
                                     <label>Sub Title <?php echo e($k); ?></label>
@@ -103,57 +121,6 @@
             </div>
         </form>
     <?php endif; ?>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        <!-- end form for validations -->
-
-
 </div>
 <?php $__env->stopSection(); ?>
 
