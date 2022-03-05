@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Content extends Model
 {
     use HasFactory;
-    const ABOUT = 'page';
+    const ABOUT = 'about';
     const HOME = 'home';
     const ICON = [
         'fa fa-user-circle' => "User Icon" ,

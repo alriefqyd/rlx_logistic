@@ -29,7 +29,10 @@ Route::prefix('admin')->group(function () {
     Route::get('/delivery/print-resi/{delivery:id}',[\App\Http\Controllers\AdminDeliveryController::class,'printResi']);
     Route::get('/home', [\App\Http\Controllers\AdminHomeController::class,'index'])->middleware('auth');
     Route::get('/delivery/export',[\App\Http\Controllers\AdminDeliveryController::class,'export'])->middleware(['auth']);
-    Route::get('/page/about',[\App\Http\Controllers\AdminPageController::class, 'detail']);
+
+    Route::get('/page/about',[\App\Http\Controllers\AdminPageController::class, 'detailAbout'])->middleware(['auth']);
+    Route::put('/page/about',[\App\Http\Controllers\AdminPageController::class, 'storeAbout'])->middleware(['auth']);
+
     Route::get('/page/home',[\App\Http\Controllers\AdminPageController::class, 'detail'])->middleware(['auth']);
     Route::put('/page/home',[\App\Http\Controllers\AdminPageController::class, 'store'])->middleware(['auth']);
 

@@ -8,10 +8,10 @@
         </div>
     </div>
     @if($page)
-        <form method="post" action="/admin/page/home/" enctype="multipart/form-data">
+        <form method="post" action="{{$url}}" enctype="multipart/form-data">
             @csrf
             @method('PUT')
-            @if($slider)
+            @if(isset($slider) && count($slider)>0)
                 <div class="x_panel">
                     <h4 class="text-primary mb-5">Component Slider</h4>
                     @for($i = 0; $i<count($slider); $i++)
@@ -35,7 +35,7 @@
                     @endfor
                 </div>
             @endif
-            @if($service)
+            @if(isset($service) && count($service)>0)
                 <div class="x_panel">
                     <h4 class="text-primary mb-5">Component Service</h4>
                     @for($j = 0; $j<count($service); $j++)
@@ -66,7 +66,7 @@
                             </div>
                             <div class="col-md-12 col-sm-12 col-xs-12 mb-2">
                                 <label>Description {{$j}}</label>
-                                <input class="form-control" type="text" name="serviceDescription[]" value=" {{$service[$j]['description']}}"/>
+                                <textarea class="form-control summernote" type="text" name="serviceDescription[]"> {!!$service[$j]['description']!!}</textarea>
                             </div>
                         </div>
                         <div class="ln_solid"></div>
@@ -74,7 +74,7 @@
                     @endfor
                 </div>
             @endif
-            @if($whyus)
+            @if(isset($whyus) && count($whyus)>0)
                 <div class="x_panel">
                     <h4 class="text-primary mb-5">Component Why Us</h4>
                     @for($k = 0; $k<count($whyus); $k++)
@@ -105,11 +105,109 @@
                                 </div>
                                 <div class="col-md-12 col-sm-12 col-xs-12 mb-2">
                                     <label>Description {{$k}}</label>
-                                    <input class="form-control" type="text" name="whyusDescription[]" value=" {{$whyus[$k]['description']}}"/>
+                                    <textarea class="form-control summernote" type="text" name="whyusDescription[]">{!!$whyus[$k]['description']!!}</textarea>
                                 </div>
                             </div>
                             <div class="ln_solid"></div>
                         @endif
+                    @endfor
+                </div>
+            @endif
+            @if(isset($abouts) && count($abouts)>0)
+                <div class="x_panel">
+                    <h4 class="text-primary mb-5">Component About</h4>
+                    @for($a = 0; $a<count($abouts); $a++)
+                            <div class="row">
+                                <div class="col-md-12 col-sm-12 col-xs-12 mb-2">
+                                    <label>Title</label>
+                                    <input class="form-control" type="text" name="aboutTitle" value=" {{$abouts[$a]['title']}}"/>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 col-sm-12 col-xs-12 mb-2">
+                                    <label>Sub Title</label>
+                                    <input class="form-control" type="text" name="aboutSubtitle" value=" {{$abouts[$a]['subTitle']}}"/>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 col-sm-12 col-xs-12 mb-2">
+                                    <label>Content</label>
+                                    <textarea class="form-control summernote" type="text" name="aboutContent">{!! $abouts[$a]['content'] !!}</textarea>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 col-sm-12 col-xs-12 mb-2">
+                                    <label for="image">Image</label>
+                                    {{$abouts[$a]['image']}}
+                                    <input class="form-control" type="file" id="image" name="aboutImage" value="{{$abouts[$a]['image']}}"/>
+                                </div>
+                            </div>
+                            <div class="ln_solid"></div>
+                    @endfor
+                </div>
+            @endif
+            @if(isset($visis) && count($visis)>0)
+                <div class="x_panel">
+                    <h4 class="text-primary mb-5">Visi Misi</h4>
+                    @for($v = 0; $v<count($visis); $v++)
+                        @if(array_key_exists('title', $visis[$v]))
+                            <div class="row">
+                                <div class="col-md-12 col-sm-12 col-xs-12 mb-2">
+                                    <label>Title</label>
+                                    <input class="form-control" type="text" name="visisTitle" value=" {{$visis[$v]['title']}}"/>
+                                </div>
+                            </div>
+                        @elseif(array_key_exists('image', $visis[$v]))
+                            <div class="row">
+                                <div class="col-md-12 col-sm-12 col-xs-12 mb-2">
+                                    <label>Image</label>
+                                    <input class="form-control" type="file" name="visisImage" value=" {{$visis[$v]['image']}}"/>
+                                </div>
+                            </div>
+                        @else
+                            <div class="row">
+                                <div class="col-md-12 col-sm-12 col-xs-12 mb-2">
+                                    <label>Icon {{$v}}</label>
+                                    <select name="visisIcon[]" class="form-control select2-icon">
+                                        @foreach($icons as $key => $value)
+                                            <option value="{{$key}}" {{$key == $visis[$v]['icon'] ? 'selected' : ''}} data-icon="{{$key}}">
+                                                <i class="{{$key}} text-primary fa-3x flex-shrink-0"></i>
+                                                {{$value}}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="col-md-12 col-sm-12 col-xs-12 mb-2">
+                                    <label>Sub Title {{$v}}</label>
+                                    <input class="form-control" type="text" name="visisSubtitle[]" value=" {{$visis[$v]['subTitle']}}"/>
+                                </div>
+                                <div class="col-md-12 col-sm-12 col-xs-12 mb-2">
+                                    <label>Description {{$v}}</label>
+                                    <textarea class="form-control summernote" type="text" name="visisDescription[]"> {!! $visis[$v]['description'] !!} </textarea>
+                                </div>
+                            </div>
+                        @endif
+                        <div class="ln_solid"></div>
+                    @endfor
+                </div>
+            @endif
+            @if(isset($facts) && count($facts)>0)
+                <div class="x_panel">
+                    <h4 class="text-primary mb-5">Component Fact</h4>
+                    @for($f = 0; $f<count($facts); $f++)
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12 col-xs-12 mb-2">
+                                <label>Title</label>
+                                <input class="form-control" type="text" name="factTitle" value=" {{$facts[$f]['title']}}"/>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12 col-xs-12 mb-2">
+                                <label>Content</label>
+                                <textarea class="form-control summernote" type="text" name="factContent">{!! $facts[$f]['content'] !!}</textarea>
+                            </div>
+                        </div>
+                        <div class="ln_solid"></div>
                     @endfor
                 </div>
             @endif

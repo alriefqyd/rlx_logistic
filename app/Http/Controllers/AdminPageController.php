@@ -11,7 +11,7 @@ use Illuminate\Http\Request as Requests;
 class AdminPageController extends Controller
 {
     /**
-     * Detail page for manage page page
+     * Detail page for manage page home
      */
     public function detail(){
         /*
@@ -26,19 +26,23 @@ class AdminPageController extends Controller
         */
 
 
-        $url = Request::segment(3); //temporary use url segment
-        $page = Content::where('page', '=', $url)->with('createdBy.profile')->first();
+        $page = Content::where('page', '=', Content::HOME)->with('createdBy.profile')->first();
         $icon = Content::ICON;
+        $url = '/admin/page/home/';
         if(!$page || !$page->content){
             abort(404);
         }
-
+        if(Request::segment(3) == 'about'){
+            $url = '/admin/page/about/';
+        }
         $getDataPage = null;
-        if($page) $getDataPage = $this->getDataHomePage($page);
+        if($page) $getDataPage = $this->getDataJson($page);
+
 
         return view('admin.page.detail',[
             'page' => $page,
             'icons' => $icon,
+            'url' => $url,
             'content' => $getDataPage['contentCollection'],
             'slider' => $getDataPage['sliderCollection'],
             'service' => $getDataPage['serviceCollection'],
@@ -55,7 +59,7 @@ class AdminPageController extends Controller
         $contentServiceCollection = collect([]);
         $contentWhyUsCollection = collect([]);
         $home = Content::where('page',Content::HOME)->first();
-        $getDataHomePage = $this->getDataHomePage($home);
+        $getDataHomePage = $this->getDataJson($home);
         $sliderHome = $getDataHomePage['sliderCollection'];
 
         if(!$home || !$home->content){
@@ -73,7 +77,7 @@ class AdminPageController extends Controller
 
         for($i=0;$i<count($request->sliderTitle); $i++){
             if(isset($images[$i])){
-                $file_path = public_path().'/images/'. ($sliderHome[$i]['image']); // app_path("public/test.txt");
+                $file_path = public_path().'/images/'. ($sliderHome[$i]['image']);
                 if(File::exists($file_path)) File::delete($file_path);
             }
             $contentSliderCollection->push([
@@ -131,11 +135,100 @@ class AdminPageController extends Controller
         return redirect('admin/page/home');
     }
 
-    public function getDataHomePage($page){
+    /**
+     * Detail page for manage Page About
+     */
+    public function detailAbout(){
+        $page = Content::where('page', '=', Content::ABOUT)->with('createdBy.profile')->first();
+        $icon = Content::ICON;
+        $url = '/admin/page/home/';
+        if(!$page || !$page->content){
+            abort(404);
+        }
+        if(Request::segment(3) == 'about'){
+            $url = '/admin/page/about/';
+        }
+        $getDataPage = null;
+        if($page) $getDataPage = $this->getDataJson($page);
+
+        return view('admin.page.detail',[
+            'page' => $page,
+            'icons' => $icon,
+            'url' => $url,
+            'abouts' => $getDataPage['aboutCollection'],
+            'visis' => $getDataPage['visiCollection'],
+            'facts' => $getDataPage['factsCollection']
+        ]);
+    }
+
+    /**
+     * @param Request $request
+     */
+    public function storeAbout(Requests $request)
+    {
+        $visisCollection = collect([]);
+        $about = Content::where('page',Content::ABOUT)->first();
+        $getDataAboutPage = $this->getDataJson($about);
+        $aboutExist = $getDataAboutPage['aboutCollection'];
+        $visisExist = $getDataAboutPage['visiCollection'];
+
+        if(!$about || !$about->content){
+            abort(404);
+        }
+
+        $aboutImage  = $this->uploadFile($request,'aboutImage', $aboutExist);
+        $visiImage = $this->uploadFile($request,'visisImage', $visisExist);
+
+        for($j=0;$j<count($request->visisIcon); $j++){
+            $visisCollection->push([
+                "icon"=> $request->visisIcon[$j],
+                "subTitle"=> $request->visisSubtitle[$j],
+                "description"=> $request->visisDescription[$j],
+            ]);
+        }
+
+        $data = [
+            array(
+                "type" => Content::ABOUT,
+                "title"=> $request->aboutTitle,
+                "order" => 0,
+                "subTitle"=> $request->aboutSubtitle,
+                "image"=> $aboutImage,
+                "content"=> $request->aboutContent
+            ),
+            array(
+                "type"=> "visi",
+                "title"=> $request->visisTitle,
+                "order"=> 1,
+                "image" => $visiImage,
+                "content" => $visisCollection
+            ),
+            array(
+                "type"=> "facts",
+                "title"=> $request->factTitle,
+                "order"=> 2,
+                "content" => $request->factContent
+            ),
+        ];
+
+        $content = $about->update([
+            'content' => $data
+        ]);
+
+        if($content){
+            toastr()->success('Data Content Berhasil Disimpan');
+        }
+        return redirect('admin/page/about');
+    }
+
+    public function getDataJson($page){
         $contentCollection = collect([]);
         $sliderCollection = collect([]);
         $whyUsCollection = collect([]);
         $serviceCollection = collect([]);
+        $aboutCollection = collect([]);
+        $visiCollection = collect([]);
+        $factsCollection = collect([]);
 
         $content = json_decode($page->content);
         for($i=0;$i<count($content);$i++){
@@ -184,13 +277,70 @@ class AdminPageController extends Controller
                 }
             }
 
+            if ($obj->type == 'about') {
+                $about = $content[$i];
+                $aboutCollection->push([
+                    "title" => $about->title,
+                    "subTitle" => $about->subTitle,
+                    "image" => $about->image,
+                    "content" => $about->content,
+                ]);
+            }
+
+            if ($obj->type == 'visi') {
+                $visiCollection->push(["title" => $obj->title]);
+                $visiCollection->push(["image" => $obj->image]);
+                for ($v = 0; $v < count($obj->content); $v++) {
+                    $visi = $objContent[$v];
+                    $visiCollection->push([
+                        "icon" => $visi->icon,
+                        "subTitle" => $visi->subTitle,
+                        "description" => $visi->description,
+                    ]);
+                }
+            }
+
+            if ($obj->type == 'facts') {
+                $facts = $content[$i];
+                $factsCollection->push([
+                    "title" => $facts->title,
+                    "content" => $facts->content,
+                ]);
+            }
+
         }
+
         return [
             'contentCollection' => $contentCollection,
             'sliderCollection' => $sliderCollection,
             'whyUsCollection' => $whyUsCollection,
-            'serviceCollection' => $serviceCollection
+            'serviceCollection' => $serviceCollection,
+            'aboutCollection' => $aboutCollection,
+            'visiCollection' => $visiCollection,
+            'factsCollection' => $factsCollection
         ];
+    }
+
+    function uploadFile(Requests $request, $param, $existData){
+        $imageName = null;
+        $existingImage = isset($existData[0]['image']) ? $existData[0]['image']
+            : $existData[1]['image'];
+        if($request->hasfile($param)) {
+            $file = $request->file($param);
+            $name= now().'_'.$file->getClientOriginalName();
+            $file->move(public_path().'/images/', $name);
+            $imageName = $name;
+        }
+
+        if($request->hasfile($param)) {
+            $file_path = public_path().'/images/'. ($existingImage);
+            if(File::exists($file_path)) File::delete($file_path);
+        }
+
+        $imageName = isset($imageName) ? $imageName
+            : $existingImage;
+
+        return $imageName;
     }
 }
 
