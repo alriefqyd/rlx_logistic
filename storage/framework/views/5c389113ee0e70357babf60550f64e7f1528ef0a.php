@@ -1,11 +1,9 @@
-@extends('layouts.main')
-
-@section('main')
+<?php $__env->startSection('main'); ?>
 <!-- Carousel Start -->
 <div class="container-fluid p-0 pb-5">
     <div class="owl-carousel header-carousel position-relative mb-5">
         <div class="owl-carousel-item position-relative">
-            <img class="img-fluid" src="{{asset('style/img/carousel-2.jpg')}}" alt="">
+            <img class="img-fluid" src="<?php echo e(asset('style/img/carousel-2.jpg')); ?>" alt="">
             <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center" style="background: rgba(6, 3, 21, .5);">
                 <div class="container">
                     <div class="row justify-content-start">
@@ -45,7 +43,7 @@
                 <div class="row">
                     <h6>Cek Harga Pengiriman</h6>
                     <div class="col-5 col-sm-5 text-center">
-                        <select class="select2 select-location js-select-origin form-control border-2" name="origin" style="border-radius: 10px;">
+                        <select class="select2 select-location js-select-origin form-control border-2" name="origin" style="height: 45px; border-radius: 10px;">
                             <option>Pilih Lokasi</option>
                         </select>
                     </div>
@@ -190,4 +188,6 @@
     </div>
 </div>
 <!-- Service End -->
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.main', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /Users/alriefqydasmito/Project/laravel/rlx_logistic/resources/views/home/home.blade.php ENDPATH**/ ?>

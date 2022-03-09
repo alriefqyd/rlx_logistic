@@ -1,27 +1,4 @@
-@extends('layouts.main')
-@section('main')
-    <link href="css/style.css" rel="stylesheet">
-    <style>
-        @media screen and (max-width: 1200px) {
-            .vertical {
-                display: none;
-            }
-        }
-
-        @media screen and (min-width: 1200px) {
-            .vertical {
-                /* margin-left: 5%; */
-                border-left: 2px solid silver;
-                height: 350px;
-                position:absolute;
-                left: 50%;
-            }
-            .adress{
-                padding-left: 5%
-            }
-        }
-
-    </style>
+<?php $__env->startSection('main'); ?>
     <!-- Page Header Start -->
     <div class="container-fluid page-header py-5" style="margin-bottom: 6rem;">
         <div class="container py-5">
@@ -41,15 +18,15 @@
             <div class="row g-5 mx-lg-0">
                 <div class="col-lg-6 ps-lg-0 wow fadeInLeft" data-wow-delay="0.1s" style="min-height: 400px;">
                     <div class="position-relative h-100">
-                        <img class="position-absolute img-fluid w-100 h-100" src="img/about.jpg" style="object-fit: cover;" alt="">
+                        <img class="position-absolute img-fluid w-100 h-100" src="<?php echo e(asset('img/about.jpg')); ?>" style="object-fit: cover;" alt="">
                     </div>
                 </div>
                 <div class="col-lg-6 about-text wow fadeInUp" data-wow-delay="0.3s">
                     <h6 class="text-secondary text-uppercase mb-3">About Us</h6>
                     <h1 class="mb-5">Solusi Untuk Pengiriman Anda</h1>
-                    <p class="mb-5">PT Restu Lintas Ecspres sebagai mitra
-                        memberican layanan pengiriman pacet dan
-                        documen ce-seluruh Indonesia.</p>
+                    <p class="mb-5">PT Restu Lintas Expres sebagai mitra
+                        memberikan layanan pengiriman paket dan
+                        dokumen ke-seluruh Indonesia.</p>
                     <!-- <div class="row g-4 mb-5">
                         <div class="col-sm-6 wow fadeIn" data-wow-delay="0.5s">
                             <i class="fa fa-globe fa-3x text-primary mb-3"></i>
@@ -75,8 +52,6 @@
         <div class="container feature py-5 px-lg-0">
             <div class="row g-5 mx-lg-0">
                 <div class="col-lg-6 feature-text wow fadeInUp" data-wow-delay="0.1s">
-                    <h6 class="text-secondary text-uppercase mb-3">Our Features</h6>
-                    <h1 class="mb-5">We Are Trusted Logistics Company Since 1990</h1>
                     <div class="d-flex mb-5 wow fadeInUp" data-wow-delay="0.3s">
                         <i class="fa fa-globe text-primary fa-3x flex-shrink-0"></i>
                         <div class="ms-4">
@@ -200,12 +175,19 @@
                 <div class="vertical col-lg-6 wow fadeInUp" data-wow-delay="0.1s"></div>
                 <div class="col-lg-6 wow fadeInUp adress" data-wow-delay="0.1s">
                     <div class="col-lg-6 col-md-6">
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3973.809011287596!2d119.42983191529196!3d-5.134435353375539!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dbefd790ebaabbb%3A0xa6cfd761707f2a92!2sLion%20Parcel%20RLX!5e0!3m2!1sen!2sus!4v1646295254280!5m2!1sen!2sus" width="700" height="350" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                        <h6 class="text-secondary text-uppercase mb-3">Kontak Business Inquiries</h6>
+                            <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>JALAN KEINDAHAN II BLOK AA NO.51, BUMI
+                                TAMALANREA PERMAI, TAMALANREA,
+                                MAKASSAR, SULAWESI SELATAN, 90245</p>
+                            <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>085255514005</p>
+                            <p class="mb-2"><i class="fa fa-envelope me-3"></i>ptrestulintasekspres@gmail.com</p>
+                            <p class="mb-2"><i class="fa fa-envelope me-3"></i>ptrestulintasekspres@yahoo.com</p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
     </div>
-    <!-- Fact End -->
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.main', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /Users/alriefqydasmito/Project/laravel/rlx_logistic/resources/views/about/about.blade.php ENDPATH**/ ?>
