@@ -78,10 +78,11 @@ class UserController extends Controller
         $user->email = $request->email;
         $user->username = $request->username;
         $user->password = Hash::make($request->password);
+        $user->created_by = auth()->user()->id;
         $user->profile()->associate($profile);
         $user->save();
         $user->roles()->sync($request->role);
         toastr()->success('Data Berhasil Disimpan');
-        return redirect()->route('admin.users.index');
+        return redirect('admin/users');
     }
 }

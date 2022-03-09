@@ -19,7 +19,8 @@ $(function() {
     $('.select2').select2();
     $('.select2').select2({
         allowClear: true,
-        placeholder: 'Silahkan Pilih'
+        placeholder: 'Silahkan Pilih',
+        closeOnSelect: false
     });
 
 });

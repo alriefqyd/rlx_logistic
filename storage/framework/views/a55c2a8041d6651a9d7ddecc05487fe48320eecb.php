@@ -1,7 +1,7 @@
 <div class="x_content">
     <form action="/track" method="get" class="form-horizontal form-label-left input_mask js-form-track-resi-home">
         <div class="col-md-7 col-sm-10 col-xs-9 col-md-offset-2">
-            <input type="text" name="resi" value="{{request('resi')}}"
+            <input type="text" name="resi" value="<?php echo e(request('resi')); ?>"
                    class="form-control has-feedback-left form-validation js-track-resi-field"
                    data-message-required="Anda belum memasukkan nomor resi. Masukkan no resi anda"
                    id="inputSuccess2" placeholder="No Resi">
@@ -12,3 +12,4 @@
         </div>
     </form>
 </div>
+<?php /**PATH /Users/alriefqydasmito/Project/laravel/rlx_logistic/resources/views/admin/layouts/formTrackResi.blade.php ENDPATH**/ ?>
