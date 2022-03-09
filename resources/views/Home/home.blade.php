@@ -45,7 +45,7 @@
                 <div class="row">
                     <h6>Cek Harga Pengiriman</h6>
                     <div class="col-5 col-sm-5 text-center">
-                        <select class="select2 select-location js-select-origin form-control border-2" name="origin" style="height: 45px; border-radius: 10px;">
+                        <select class="select2 select-location js-select-origin form-control border-2" name="origin" style="border-radius: 10px;">
                             <option>Pilih Lokasi</option>
                         </select>
                     </div>
