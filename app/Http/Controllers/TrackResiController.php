@@ -11,17 +11,25 @@ class TrackResiController extends Controller
     public function search(Request $request){
         $invoice = request('resi');
         $api = $this->getApiInvoice($invoice);
+        $url = request()->segment(1);
         if($api['status'] == 200){
             $data = json_decode($api['data'], true);
-            return view('admin.track.detail', [
+            $params = [
                 'invoice' => $data,
                 'summary' => $data['data']['summary'],
                 'status' => $data['data']['summary']['status'],
                 'detail' => $data['data']['detail'],
                 'history' => $data['data']['history'],
-            ]);
+            ] ;
+            if($url == 'admin') return view('admin.track.detail', $params);
+            return view('track', $params);
         } else {
-            return view('admin.track.detail', [
+            if($url == 'admin'){
+                return view('admin.track.detail', [
+                    'invoice' => null
+                ]);
+            }
+            return view('track', [
                 'invoice' => null
             ]);
         }

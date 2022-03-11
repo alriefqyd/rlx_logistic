@@ -1,5 +1,5 @@
 <div class="x_content">
-    <form action="/track" method="get" class="form-horizontal form-label-left input_mask js-form-track-resi-home">
+    <form action="/admin/track" method="get" class="form-horizontal form-label-left input_mask js-form-track-resi-home">
         <div class="col-md-7 col-sm-10 col-xs-9 col-md-offset-2">
             <input type="text" name="resi" value="{{request('resi')}}"
                    class="form-control has-feedback-left form-validation js-track-resi-field"

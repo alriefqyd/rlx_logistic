@@ -47,12 +47,6 @@
                             <div class="title col-sm-12 col-md-12 col-xs-12">
                                 <div class="col-md-12 col-sm-12" style="font-size: 18px;">
                                     <div class="col-md-12 text-center">Status : {{$status}}</div>
-{{--                                    <div class="col-sm-6 col-md-6 text-center">--}}
-{{--                                        <p>Shipment ID 11LP1639018693986 </p>--}}
-{{--                                    </div>--}}
-{{--                                    <div class="col-sm-6 col-md-6 text-center">--}}
-{{--                                        <p>STT 11LP1639018693986 </p>--}}
-{{--                                    </div>--}}
                                 </div>
                             </div>
                             <div class="x_content">
@@ -61,14 +55,6 @@
                                         <!-- <div class="col-md-12"> -->
                                         <ul class="cbp_tmtimeline">
                                             @foreach($history as $his)
-
-{{--                                            <li>--}}
-{{--                                                <time class="cbp_tmtime" datetime="2017-11-04T18:30"><span>25/12/2017</span> <span>03:45 AM</span></time>--}}
-{{--                                                <div class="cbp_tmicon bg-blush"><i class="fas fa-clipboard-check" style="color: white;"></i></div>--}}
-{{--                                                <div class="cbp_tmlabel">--}}
-{{--                                                    <p class="text-primary">Telah diterima oleh pak alan (SEC)</p>--}}
-{{--                                                </div>--}}
-{{--                                            </li>--}}
                                             <li>
                                                 <time class="cbp_tmtime" datetime="2017-11-04T18:30"><span>{{$his['date']}}</span></time>
                                                 <div class="cbp_tmicon {{ $loop->first || $loop->last ? 'bg-blush' : 'bg-white'}}">
@@ -80,34 +66,6 @@
                                                     <p class="text-primary">{{$his['desc']}}</p>
                                                 </div>
                                             </li>
-{{--                                            <li>--}}
-{{--                                                <time class="cbp_tmtime" datetime="2017-11-04T18:30"><span>25/12/2017</span> <span>03:45 AM</span></time>--}}
-{{--                                                <div class="cbp_tmicon bg-white"><i class="fas fa-warehouse text-primary"></i></div>--}}
-{{--                                                <div class="cbp_tmlabel">--}}
-{{--                                                    <p class="text-primary">Di Gudang Lokasi A</p>--}}
-{{--                                                </div>--}}
-{{--                                            </li>--}}
-{{--                                            <li>--}}
-{{--                                                <time class="cbp_tmtime" datetime="2017-11-04T18:30"><span>25/12/2017</span> <span>12:22 AM</span></time>--}}
-{{--                                                <div class="cbp_tmicon bg-white"><i class="fas fa-plane text-primary"></i></div>--}}
-{{--                                                <div class="cbp_tmlabel">--}}
-{{--                                                    <p class="text-primary">Di Kirim Ke A</p>--}}
-{{--                                                </div>--}}
-{{--                                            </li>--}}
-{{--                                            <li>--}}
-{{--                                                <time class="cbp_tmtime" datetime="2017-11-04T18:30"><span>25/12/2017</span> <span>03:45 AM</span></time>--}}
-{{--                                                <div class="cbp_tmicon bg-white"><i class="fas fa-store-alt text-primary"></i></div>--}}
-{{--                                                <div class="cbp_tmlabel">--}}
-{{--                                                    <p class="text-primary">Station Transit In Origin Consolidator PT MARLION SUKSES SEJAHTERA.</p>--}}
-{{--                                                </div>--}}
-{{--                                            </li>--}}
-{{--                                            <li>--}}
-{{--                                                <time class="cbp_tmtime" datetime="2017-11-04T18:30"><span>25/12/2017</span> <span>03:12 AM</span></time>--}}
-{{--                                                <div class="cbp_tmicon bg-blush"><i class="fas fa-box" style="color: white;"></i></div>--}}
-{{--                                                <div class="cbp_tmlabel">--}}
-{{--                                                    <p class="text-primary">Di Booking</p>--}}
-{{--                                                </div>--}}
-{{--                                            </li>--}}
                                             @endforeach
                                         </ul>
                                         <!-- </div> -->

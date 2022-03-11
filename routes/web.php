@@ -26,6 +26,7 @@ Route::get('/delivery/getDataDelivery', [\App\Http\Controllers\AdminDeliveryCont
 
 
 Route::prefix('admin')->group(function () {
+    Route::get('/track',[\App\Http\Controllers\TrackResiController::class, 'search'])->middleware(['auth']);
     Route::get('/delivery/print-resi/{delivery:id}',[\App\Http\Controllers\AdminDeliveryController::class,'printResi']);
     Route::get('/home', [\App\Http\Controllers\AdminHomeController::class,'index'])->middleware('auth');
     Route::get('/delivery/export',[\App\Http\Controllers\AdminDeliveryController::class,'export'])->middleware(['auth']);
