@@ -33,8 +33,6 @@
                         <div class="clearfix"></div>
                     </div>
                     @include('admin.layouts.formTrackResi')
-
-
                     <div class="col-md-12 col-sm-12 col-xs-12">
                         <div class="track-error">
                             @if(!$invoice)
