@@ -136,6 +136,7 @@
 <script src="{{asset('style/admin/vendors/select2/dist/js/select2.full.min.js')}}"></script>
 <script src="{{asset('style/admin/vendors/select2-4/dist/js/select2.full.min.js')}}"></script>
 <script src="{{asset('style/admin/vendors/select2-4/dist/js/select2.min.js')}}"></script>
+<script src="{{asset('style/js/application.js')}}"></script>
 
 <!-- Template Javascript -->
 <script src="{{asset('style/js/main.js')}}"></script>

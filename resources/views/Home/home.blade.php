@@ -24,34 +24,36 @@
 </div>
 <!-- Carousel End -->
 
-<!-- Desktop Card -->
+    <!-- Desktop Card -->
 <div class="card-track-container-desktop container mt-5 mb-3" style="width: 50%;">
     <div class="row">
         <div class="col-md-12 card-overlap-home">
-            <div class="card p-3 mb-3" style="box-shadow: 0 4px 25px rgb(0 0 0 / 10%);">
-                <div class="row">
-                    <h6>Lacak Pengiriman</h6>
-                    <!-- <div class="col-2 col-sm-1">
-                        <i class="fa fa-shipping-fast fa-3x text-primary mb-2"></i>
-                    </div> -->
-                    <div class="col-10 col-sm-10">
-                        <input type="text" class="form-control border-2" placeholder="No Resi" style="height: 45px; border-radius: 10px;">
+            <div class="card p-3 mb-3 mt-3" style="box-shadow: 0 4px 25px rgb(0 0 0 / 10%);">
+                <form action="/track" method="get">
+                    <div class="row">
+                            <h6>Lacak Pengiriman</h6>
+                            <!-- <div class="col-2 col-sm-1">
+                                <i class="fa fa-shipping-fast fa-3x text-primary mb-2"></i>
+                            </div> -->
+                            <div class="col-10 col-sm-10">
+                                <input type="text" class="form-control border-2" name="resi" value="{{request('resi')}}" placeholder="No Resi" style="height: 45px; border-radius: 10px;">
+                            </div>
+                            <div class="col-2 col-sm-2 mb-3">
+                                <button class="btn btn-primary w-30 py-2" type="submit" style="height: 45px; border-radius: 10px;"><i class="track-icon fa fa-shipping-fast fa-1x text-primary mb-2"></i> Lacak</button>
+                            </div>
+                        <hr>
                     </div>
-                    <div class="col-2 col-sm-2 mb-3">
-                        <button class="btn btn-primary w-30 py-2" type="submit" style="height: 45px; border-radius: 10px;"><i class="track-icon fa fa-shipping-fast fa-1x text-primary mb-2"></i> Lacak</button>
-                    </div>
-                    <hr>
-                </div>
+                </form>
                 <div class="row">
                     <h6>Cek Harga Pengiriman</h6>
                     <div class="col-5 col-sm-5 text-center">
-                        <select class="select2 select-location js-select-origin form-control border-2" name="origin" style="border-radius: 10px;">
-                            <option>Pilih Lokasi</option>
+                        <select class="select2 select-location js-select-origin form-control border-2" data-price-url="/getPrice" data-url="/getLocation" name="origin" style="border-radius: 10px;">
+                            <option>Pilih Lokasi Asal</option>
                         </select>
                     </div>
                     <div class="col-5 col-sm-5 text-center">
-                        <select class="select2 js-select-destination form-control border-2 js-select-destination" name="destination" style="height: 45px; border-radius: 10px;">
-                            <option>Pilih Lokasi</option>
+                        <select class="select2 js-select-destination form-control border-2 js-select-destination" data-price-url="/getPrice" data-url="/getLocation" name="destination" style="height: 45px; border-radius: 10px;">
+                            <option>Pilih Lokasi Tujuan</option>
                         </select>
                     </div>
                     <div class="col-2 col-sm-2 text-center">
@@ -81,18 +83,19 @@
                     </div>
                 </div>
                 <div class="row">
-                    <h6>Lacak Pengiriman</h6>
-                    <!-- <div class="col-2 col-sm-1">
-                        <i class="fa fa-shipping-fast fa-3x text-primary mb-2"></i>
-                    </div> -->
-                    <div class="col-5 col-sm-12 mb-2 card-overlap-form">
-                        <select class="select2 form-control border-2" name="origin" style="height: 45px; border-radius: 10px;"></select>
+                    <h6>Cek Harga Pengiriman</h6>
+                    <div class="col-5 col-sm-5 text-center">
+                        <select class="select2 select-location js-select-origin form-control border-2" data-price-url="/getPrice" data-url="/getLocation" name="origin" style="border-radius: 10px;">
+                            <option>Pilih Lokasi Asal</option>
+                        </select>
                     </div>
-                    <div class="col-5 col-sm-12 mb-2 card-overlap-form">
-                        <select class="select2 form-control border-2" name="destination" style="height: 45px; border-radius: 10px;"></select>
+                    <div class="col-5 col-sm-5 text-center">
+                        <select class="select2 js-select-destination form-control border-2 js-select-destination" data-price-url="/getPrice" data-url="/getLocation" name="destination" style="height: 45px; border-radius: 10px;">
+                            <option>Pilih Lokasi Tujuan</option>
+                        </select>
                     </div>
-                    <div class="col-2 col-sm-12 card-overlap-button">
-                        <button class="btn btn-primary w-30 py-2" type="submit" style="height: 45px; border-radius: 10px;"><i class="track-icon fa fa-search-dollar fa-1x text-primary mb-2"></i></button>
+                    <div class="col-2 col-sm-2 text-center">
+                        <button class="btn btn-primary w-30 py-2" type="submit" style="height: 45px; border-radius: 10px;"></i> Cek Harga</button>
                     </div>
                 </div>
             </div>
